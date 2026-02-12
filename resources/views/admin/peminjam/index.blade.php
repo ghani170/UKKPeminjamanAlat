@@ -4,7 +4,7 @@
     <div class="flex-1 overflow-y-auto p-8">
         <div class="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden">
             <div class="px-8 py-6 border-b border-slate-100 flex items-center justify-between">
-                <h3 class="font-bold text-slate-900 text-lg">Peminjam</h3>
+                <h3 class="font-bold text-slate-900 text-lg">Kelola Peminjam</h3>
                 <a href="{{ route('admin.peminjam.create') }}"
                     class="px-5 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition duration-150 shadow-md">Create
                     Peminjam</a>
@@ -75,7 +75,6 @@
                             <th class="px-8 py-4 text-center">Email</th>
                             <th class="px-8 py-4 text-center">Created At</th>
                             <th class="px-4 py-3 text-center">Action</th>
-
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-100">

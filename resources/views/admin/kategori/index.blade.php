@@ -4,10 +4,10 @@
     <div class="flex-1 overflow-y-auto p-8">
         <div class="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden">
             <div class="px-8 py-6 border-b border-slate-100 flex items-center justify-between">
-                <h3 class="font-bold text-slate-900 text-lg">Kelola Petugas</h3>
-                <a href="{{ route('admin.petugas.create') }}"
+                <h3 class="font-bold text-slate-900 text-lg">Kategori</h3>
+                <a href="{{ route('admin.kategori.create') }}"
                     class="px-5 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition duration-150 shadow-md">Create
-                    Petugas</a>
+                    Kategori</a>
             </div>
             <div class="px-8 mt-6">
                 {{-- Alert Success --}}
@@ -71,33 +71,32 @@
                 <table class="w-full text-left">
                     <thead class="bg-slate-50 text-slate-500 text-xs uppercase font-bold">
                         <tr>
-                            <th class="px-8 py-4 text-center">Name</th>
-                            <th class="px-8 py-4 text-center">Email</th>
+                            <th class="px-8 py-4 text-center">Nama Kategori</th>
+                            <th class="px-8 py-4 text-center">Deskripsi</th>
                             <th class="px-8 py-4 text-center">Created At</th>
                             <th class="px-4 py-3 text-center">Action</th>
-
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-100">
-                        @forelse ($petugas as $pet)
+                        @forelse ($kategori as $k)
                             <tr class="hover:bg-slate-50 transition-colors">
                                 <td class="px-8 py-5 text-center">
-                                    <span class="font-medium text-slate-900 text-sm">{{ $pet->name }}</span>
+                                    <span class="font-medium text-slate-900 text-sm">{{ $k->nama_kategori }}</span>
                                 </td>
                                 <td class="px-8 py-5 text-center">
-                                    <span class="font-medium text-slate-900 text-sm">{{ $pet->email }}</span>
+                                    <span class="font-medium text-slate-900 text-sm">{{ $k->deskripsi }}</span>
                                 </td>
                                 <td class="px-8 py-5 text-center">
                                     <span
-                                        class="font-medium text-slate-900 text-sm">{{ $pet->created_at->format('d M Y') }}</span>
+                                        class="font-medium text-slate-900 text-sm">{{ $k->created_at->format('d M Y') }}</span>
                                 </td>
                                 <td class="px-8 py-5 text-sm text-slate-500">
                                     <div class="flex justify-center items-center gap-2">
-                                        <a href="{{ route('admin.petugas.edit', $pet->id) }}"
+                                        <a href="{{ route('admin.kategori.edit', $k->id) }}"
                                             class="px-3 py-1 bg-yellow-400 hover:bg-yellow-500 text-white rounded-md text-sm font-medium transition">
                                             Edit
                                         </a>
-                                        <form action="{{ route('admin.petugas.destroy', $pet->id) }}" method="POST"
+                                        <form action="{{ route('admin.kategori.destroy', $k->id) }}" method="POST"
                                             onsubmit="return confirm('Yakin ingin menghapus?')" style="display:inline;">
                                             @csrf
                                             @method('DELETE')
@@ -121,8 +120,8 @@
                                                     d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
                                             </svg>
                                         </div>
-                                        <p class="text-slate-500 font-medium">Belum ada data petugas.</p>
-                                        <p class="text-slate-400 text-xs mt-1">Silakan klik tombol "Create Petugas" untuk
+                                        <p class="text-slate-500 font-medium">Belum ada data kategori.</p>
+                                        <p class="text-slate-400 text-xs mt-1">Silakan klik tombol "Create Kategori" untuk
                                             menambah data baru.</p>
                                     </div>
                                 </td>

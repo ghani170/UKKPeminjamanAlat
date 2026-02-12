@@ -39,6 +39,16 @@
                         <span>Kelola Petugas</span>
                     </a>
 
+                    <a href="{{ route('admin.kategori.index') }}" class="flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-slate-800 hover:text-blue-400 transition-all group {{ request()->routeIs('admin.kategori*') ? 'bg-slate-800 text-blue-400' : '' }}">
+                        <i class="fas fa-wallet"></i>
+                        <span>Kategori Alat</span>
+                    </a>
+
+                    <a href="{{ route('admin.alat.index') }}" class="flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-slate-800 hover:text-blue-400 transition-all group {{ request()->routeIs('admin.alat*') ? 'bg-slate-800 text-blue-400' : '' }}">
+                        <i class="fas fa-wallet"></i>
+                        <span>Kelola Alat</span>
+                    </a>
+
                     <a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-slate-800 hover:text-white transition-all group">
                         <i class="fas fa-users text-slate-500 group-hover:text-blue-400"></i>
                         <span>Customers</span>

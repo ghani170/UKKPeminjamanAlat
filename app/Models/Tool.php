@@ -8,7 +8,7 @@ class Tool extends Model
 {
     protected $fillable = [
         'nama_alat',
-        'kategori_id',
+        'category_id',
         'jumlah_stok',
         'deskripsi',
     ];

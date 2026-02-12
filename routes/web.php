@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\AlatController;
+use App\Http\Controllers\Admin\KategoriController;
 use App\Http\Controllers\Admin\PeminjamController;
 use App\Http\Controllers\Admin\PetugasController;
 use App\Http\Controllers\Auth\AuthController;
@@ -19,6 +21,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->grou
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::resource('/peminjam', PeminjamController::class);
     Route::resource('/petugas', PetugasController::class);
+    Route::resource('/kategori', KategoriController::class);
+    Route::resource('/alat', AlatController::class);
 });
 
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');

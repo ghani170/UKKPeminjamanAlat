@@ -40,4 +40,33 @@ class PetugasController extends Controller
         return view('admin.petugas.edit', compact('petugas'));
     }
 
+    public function update(Request $request, $id){
+        $petugas = User::findOrFail($id);
+
+        $data = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $petugas->id,
+            'password' => 'nullable|string|min:8|unique:users,password,' . $petugas->id,
+        ]);
+
+        $data = [
+            'name' => $data['name'],
+            'email' => $data['email'],
+        ];
+
+        if ($request->password){
+            $data['password'] = Hash::make($request->password);
+        }
+
+        $petugas->update($data);
+
+        return redirect()->route('admin.petugas.index')->with('success', 'petugas berhasil ditambahkan');
+    }
+
+    public function destroy(String $id){
+        $petugas = User::findOrFail($id);
+        $petugas->delete();
+        return redirect()->route('admin.petugas.index')->with('success', 'petugas berhasil dihapus');
+    }
+
 }
