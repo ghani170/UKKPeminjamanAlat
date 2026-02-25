@@ -23,7 +23,8 @@
 
                 <nav class="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
                     <p class="px-4 text-xs font-semibold uppercase text-slate-500 mb-2">Main Menu</p>
-                    
+                    @php $user = Auth::user(); @endphp
+                    @if ($user->role === 'admin')
                     <a href="{{ route('admin.dashboard') }}" class="flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-slate-800 hover:text-blue-400 transition-all group {{ request()->routeIs('admin.dashboard') ? 'bg-slate-800 text-blue-400' : '' }}">
                         <i class="fas fa-chart-pie"></i>
                         <span>Dashboard</span>
@@ -48,11 +49,25 @@
                         <i class="fas fa-wallet"></i>
                         <span>Kelola Alat</span>
                     </a>
+                    @endif
 
-                    <a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-slate-800 hover:text-white transition-all group">
-                        <i class="fas fa-users text-slate-500 group-hover:text-blue-400"></i>
-                        <span>Customers</span>
+                    @if ($user->role === 'peminjam')
+                    <a href="{{ route('peminjam.dashboard') }}" class="flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-slate-800 hover:text-blue-400 transition-all group {{ request()->routeIs('peminjam.dashboard') ? 'bg-slate-800 text-blue-400' : '' }}">
+                        <i class="fas fa-chart-pie"></i>
+                        <span>Dashboard</span>
                     </a>
+
+                    <a href="{{ route('peminjam.alat.index') }}" class="flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-slate-800 hover:text-blue-400 transition-all group {{ request()->routeIs('peminjam.alat*') ? 'bg-slate-800 text-blue-400' : '' }}">
+                        <i class="fas fa-wallet"></i>
+                        <span>Lihat Alat</span>
+                    </a>
+
+                    <a href="{{ route('peminjam.dipinjam.index') }}" class="flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-slate-800 hover:text-blue-400 transition-all group {{ request()->routeIs('peminjam.dipinjam*') ? 'bg-slate-800 text-blue-400' : '' }}">
+                        <i class="fas fa-wallet"></i>
+                        <span>Lihat Alat Dipinjam</span>
+                    </a>
+                    @endif
+                    
 
                     <div class="pt-6">
                         <p class="px-4 text-xs font-semibold uppercase text-slate-500 mb-2">Supports</p>

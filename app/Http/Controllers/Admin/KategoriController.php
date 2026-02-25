@@ -58,6 +58,9 @@ class KategoriController extends Controller
 
     public function destroy(String $id){
         $kategori = Category::findOrFail($id);
+        if ($kategori->tool()->count() > 0){
+            return redirect()->route('admin.kategori.index')->with('error', 'kategori tidak bisa dihapus karena masih memiliki alat terkait');
+        }
         $kategori->delete();
         return redirect()->route('admin.kategori.index')->with('success', 'kategori berhasil dihapus');
     }

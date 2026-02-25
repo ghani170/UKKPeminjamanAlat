@@ -21,7 +21,7 @@ class Borrowing extends Model
 
     public function loanDetail()
     {
-        return $this->hasMany(LoanDetail::class);
+        return $this->hasOne(LoanDetail::class);
     }
 
     public function returnItem()
