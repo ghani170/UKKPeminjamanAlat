@@ -1,10 +1,10 @@
 @extends('layout.app')
-@section('title', 'Alat')
+@section('title', 'Daftar Peminjaman')
 @section('content')
     <div class="flex-1 overflow-y-auto p-8">
         <div class="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden">
             <div class="px-8 py-6 border-b border-slate-100 flex items-center justify-between">
-                <h3 class="font-bold text-slate-900 text-lg">Alat</h3>
+                <h3 class="font-bold text-slate-900 text-lg">Peminjaman Masuk</h3>
             </div>
             <div class="px-8 mt-6">
                 {{-- Alert Success --}}
@@ -68,55 +68,69 @@
                 <table class="w-full text-left">
                     <thead class="bg-slate-50 text-slate-500 text-xs uppercase font-bold">
                         <tr>
+                            <th class="px-8 py-4 text-center">Nama User</th>
                             <th class="px-8 py-4 text-center">Nama Alat</th>
-                            <th class="px-8 py-4 text-center">Deskripsi</th>
-                            <th class="px-8 py-4 text-center">Kategori</th>
-                            <th class="px-8 py-4 text-center">Jumlah Stok</th>
                             <th class="px-8 py-4 text-center">Tanggal Pinjam</th>
                             <th class="px-8 py-4 text-center">Tanggal Kembali</th>
-                            <th class="px-8 py-4 text-center">Jumlah Stock</th>
-                            <th class="px-8 py-4 text-center">Aksi</th>
+                            <th class="px-8 py-4 text-center">Jumlah</th>
+                            <th class="px-8 py-4 text-center">Persetujuan</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-100">
-                        @forelse ($alat as $a)
-                                <tr class="hover:bg-slate-50 transition-colors">
-                                    <td class="px-8 py-5 text-center text-sm text-slate-900">{{ $a->nama_alat }}</td>
-                                    <td class="px-8 py-5 text-center text-sm text-slate-900">{{ $a->deskripsi }}</td>
-                                    <td class="px-8 py-5 text-center text-sm text-slate-900">{{ $a->category->nama_kategori }}</td>
-                                    <td class="px-8 py-5 text-center text-sm text-slate-900">{{ $a->jumlah_stok }}</td>
 
-                                    {{-- Form Start --}}
-                                    <form action="{{ route('peminjam.alat.store') }}" method="POST">
+                        @forelse ($peminjaman as $p)
+
+                            <tr class="hover:bg-slate-50 transition-colors">
+
+                                <td class="px-8 py-5 text-center">
+                                    <span class="font-medium text-slate-900 text-sm">
+                                        {{ $p->user->name }}
+                                    </span>
+                                </td>
+                                
+                                <td class="px-8 py-5 text-center">
+                                    <span class="font-medium text-slate-900 text-sm">
+                                        {{ $p->loanDetail->tool->nama_alat }}
+                                    </span>
+                                </td>
+
+                                <td class="px-8 py-5 text-center">
+                                    {{ $p->tanggal_pinjam }}
+                                </td>
+
+                                <td class="px-8 py-5 text-center">
+                                    {{ $p->tanggal_kembali }}
+                                </td>
+
+                                <td class="px-8 py-5 text-center">
+                                    {{ $p->loanDetail->jumlah }}
+                                </td>
+
+                                <td class="px-8 py-5 text-center">
+                                    <form action="{{ route('petugas.updatePersetujuan', $p->id) }}" method="POST">
                                         @csrf
-                                        <input type="hidden" name="tool_id" value="{{ $a->id }}">
+                                        @method('PUT')
+                                        <select name="persetujuan" onchange="this.form.submit()"
+                                            class="w-30 border border-gray-300 rounded-lg px-3 py-2">
 
-                                        <td class="px-2 py-5 text-center">
-                                            <input type="date" name="tanggal_pinjam" required
-                                                class="w-full border border-gray-300 rounded-lg px-4 py-2.5 
-                                                    focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150">
-                                        </td>
-                                        <td class="px-2 py-5 text-center">
-                                            <input type="date" name="tanggal_kembali" required
-                                                class="w-full border border-gray-300 rounded-lg px-4 py-2.5 
-                                                    focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150">
-                                        </td>
-                                        <td class="px-2 py-5 text-center">
-                                            <input type="number" name="jumlah_pinjam" min="1" max="{{ $a->jumlah_stok }}" value="1"
-                                                required class="w-full border border-gray-300 rounded-lg px-4 py-2.5 
-                                                    focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150">
-                                        </td>
-                                        <td class="px-8 py-5 text-center">
-                                            <button type="submit" @if($a->jumlah_stok <= 0) disabled @endif
-                                                class="px-4 py-2 {{ $a->jumlah_stok <= 0 ? 'bg-gray-300' : 'bg-yellow-400 hover:bg-yellow-500' }} text-white rounded-xl text-sm font-bold transition shadow-sm">
-                                                {{ $a->jumlah_stok <= 0 ? 'Habis' : 'Pinjam' }}
-                                            </button>
-                                        </td>
+                                            <option value="pending" {{ $p->persetujuan == 'pending' ? 'selected' : '' }}>Pending
+                                            </option>
+                                            <option value="disetujui" {{ $p->persetujuan == 'disetujui' ? 'selected' : '' }}>
+                                                Disetujui</option>
+                                            <option value="ditolak" {{ $p->persetujuan == 'ditolak' ? 'selected' : '' }}>Ditolak
+                                            </option>
+
+                                        </select>
                                     </form>
-                                    {{-- Form End --}}
-                                </tr>
+                                </td>
+
+                                </form>
+
+                            </tr>
+
+
                         @empty
-                             {{-- Tampilan saat data kosong --}}
+                            {{-- Tampilan saat data kosong --}}
                             <tr>
                                 <td colspan="4" class="px-8 py-12 text-center">
                                     <div class="flex flex-col items-center justify-center">
@@ -128,6 +142,8 @@
                                             </svg>
                                         </div>
                                         <p class="text-slate-500 font-medium">Belum ada data alat.</p>
+                                        <p class="text-slate-400 text-xs mt-1">Silakan klik tombol "Create Alat" untuk
+                                            menambah data baru.</p>
                                     </div>
                                 </td>
                             </tr>

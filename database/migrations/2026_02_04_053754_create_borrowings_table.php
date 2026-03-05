@@ -17,7 +17,7 @@ return new class extends Migration
             $table->date('tanggal_pinjam');
             $table->date('tanggal_kembali');
             $table->enum('persetujuan', ['disetujui', 'ditolak', 'pending']);
-            $table->enum('status', ['dipinjam', 'dikembalikan']);
+            $table->enum('status', ['dipinjam', 'dikembalikan', 'pending']);
             $table->timestamps();
         });
     }

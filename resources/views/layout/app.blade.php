@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modern Elegance Dashboard</title>
+    <title>@yield('title')</title>
     @vite('resources/css/app.css')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -66,17 +66,36 @@
                         <i class="fas fa-wallet"></i>
                         <span>Lihat Alat Dipinjam</span>
                     </a>
+
+                    <a href="{{ route('peminjam.dikembalikan.index') }}" class="flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-slate-800 hover:text-blue-400 transition-all group {{ request()->routeIs('peminjam.dikembalikan*') ? 'bg-slate-800 text-blue-400' : '' }}">
+                        <i class="fas fa-wallet"></i>
+                        <span>Lihat Alat Dikembalikan</span>
+                    </a>
+                    @endif
+
+                    @if ($user->role === 'petugas')
+                    <a href="{{ route('petugas.dashboard') }}" class="flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-slate-800 hover:text-blue-400 transition-all group {{ request()->routeIs('petugas.dashboard') ? 'bg-slate-800 text-blue-400' : '' }}">
+                        <i class="fas fa-chart-pie"></i>
+                        <span>Dashboard</span>
+                    </a>
+
+                    <a href="{{ route('petugas.peminjaman.index') }}" class="flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-slate-800 hover:text-blue-400 transition-all group {{ request()->routeIs('petugas.peminjaman*') ? 'bg-slate-800 text-blue-400' : '' }}">
+                        <i class="fas fa-wallet"></i>
+                        <span>Peminjaman Masuk</span>
+                    </a>
+                    
+                    <a href="{{ route('petugas.pengembalian.index') }}" class="flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-slate-800 hover:text-blue-400 transition-all group {{ request()->routeIs('petugas.pengembalian*') ? 'bg-slate-800 text-blue-400' : '' }}">
+                        <i class="fas fa-wallet"></i>
+                        <span>Pengembalian Masuk</span>
+                    </a>
+                    
                     @endif
                     
 
                     <div class="pt-6">
-                        <p class="px-4 text-xs font-semibold uppercase text-slate-500 mb-2">Supports</p>
-                        <a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-slate-800 hover:text-white transition-all group">
-                            <i class="fas fa-cog text-slate-500 group-hover:text-blue-400"></i>
-                            <span>Settings</span>
-                        </a>
+                        <p class="px-4 text-xs font-semibold uppercase text-slate-500 mb-2">Others</p>
                         <a href="{{ route('logout') }}" class="flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-slate-800 hover:text-white transition-all group">
-                            <i class="fas fa-cog text-slate-500 group-hover:text-blue-400"></i>
+                            <i class="fa-solid fa-right-from-bracket text-slate-500 group-hover:text-blue-400"></i>
                             <span>Logout</span>
                         </a>
                     </div>

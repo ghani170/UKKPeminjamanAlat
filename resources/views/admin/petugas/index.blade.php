@@ -1,5 +1,5 @@
 @extends('layout.app')
-@section('title', 'Create Peminjaman')
+@section('title', 'Petugas')
 @section('content')
     <div class="flex-1 overflow-y-auto p-8">
         <div class="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden">

@@ -1,5 +1,5 @@
 @extends('layout.app')
-@section('title', 'Edit Peminjam')
+@section('title', 'Edit Kategori')
 @section('content')
 <div class="flex-1 overflow-y-auto p-8">
 <form action="{{ route('admin.kategori.update', $kategori->id) }}" method="POST" enctype="multipart/form-data"

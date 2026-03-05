@@ -1,5 +1,5 @@
 @extends('layout.app')
-@section('title', 'Create Peminjam')
+@section('title', 'Create Kategori')
 @section('content')
 <div class="flex-1 overflow-y-auto p-8">
 <form action="{{ route('admin.kategori.store') }}" method="POST" enctype="multipart/form-data"

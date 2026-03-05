@@ -1,5 +1,5 @@
 @extends('layout.app')
-@section('title', 'Create Peminjam')
+@section('title', 'Edit Alat')
 @section('content')
 <div class="flex-1 overflow-y-auto p-8">
 <form action="{{ route('admin.alat.update', $alat->id) }}" method="POST" enctype="multipart/form-data"

@@ -1,13 +1,10 @@
 @extends('layout.app')
-@section('title', 'Daftar Peminjaman')
+@section('title', 'Daftar Dipinjam')
 @section('content')
     <div class="flex-1 overflow-y-auto p-8">
         <div class="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden">
             <div class="px-8 py-6 border-b border-slate-100 flex items-center justify-between">
                 <h3 class="font-bold text-slate-900 text-lg">Alat</h3>
-                <a href="{{ route('admin.alat.create') }}"
-                    class="px-5 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition duration-150 shadow-md">Create
-                    Alat</a>
             </div>
             <div class="px-8 mt-6">
                 {{-- Alert Success --}}
@@ -72,40 +69,108 @@
                     <thead class="bg-slate-50 text-slate-500 text-xs uppercase font-bold">
                         <tr>
                             <th class="px-8 py-4 text-center">Nama Alat</th>
-                            <th class="px-8 py-4 text-center">Tanggal Pinjam</th>
-                            <th class="px-8 py-4 text-center">Tanggal Kembali</th>
                             <th class="px-8 py-4 text-center">Jumlah</th>
+                            <th class="px-8 py-4 text-center">Status</th>
+                            <th class="px-8 py-4 text-center">Kondisi</th>
+                            <th class="px-8 py-4 text-center">Catatan</th>
                             <th class="px-4 py-3 text-center">Action</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-100">
-                        
+
                         @forelse ($peminjaman as $p)
-                            <tr class="hover:bg-slate-50 transition-colors">
-                                <td class="px-8 py-5 text-center">
-                                    <span class="font-medium text-slate-900 text-sm">{{ $p->loanDetail->tool->nama_alat }}</span>
-                                </td>
-                                <td class="px-8 py-5 text-center">
-                                    <span class="font-medium text-slate-900 text-sm">{{ $p->tanggal_pinjam }}</span>
-                                </td>
-                                <td class="px-8 py-5 text-center">
-                                    <span
-                                        class="font-medium text-slate-900 text-sm">{{ $p->tanggal_kembali }}<span>
-                                </td>
-                                <td class="px-8 py-5 text-center">
-                                    <span
-                                        class="font-medium text-slate-900 text-sm">{{ $p->loanDetail->jumlah }}</span>
-                                </td>
-                                <td class="px-8 py-5 text-sm text-slate-500">
-                                    <div class="flex justify-center items-center gap-2">
-                                        <a href="{{ route('peminjam.dipinjam.show', $p->id) }}"
-                                            class="px-3 py-1 bg-blue-400 hover:bg-blue-500 text-white rounded-md text-sm font-medium transition">
-                                            Detail
-                                        </a>
-                                        
-                                    </div>
-                                </td>
-                            </tr>
+                            @if ($p->status === 'dipinjam')
+                                <tr class="hover:bg-slate-50 transition-colors">
+
+                                    <form action="{{ route('peminjam.dikembalikan.update', $p->id) }}" method="POST">
+                                        @csrf
+                                        @method('PUT')
+
+                                        <td class="px-8 py-5 text-center">
+                                            <span class="font-medium text-slate-900 text-sm">
+                                                {{ $p->loanDetail->tool->nama_alat }}
+                                            </span>
+                                        </td>
+
+                                        <td class="px-8 py-5 text-center">
+                                            {{ $p->loanDetail->jumlah }}
+                                        </td>
+
+                                        <td class="px-8 py-5 text-center">
+                                            {{ $p->status }}
+                                        </td>
+
+
+                                        {{-- KOLOM KONDISI --}}
+                                        <td class="px-8 py-5 text-center">
+
+                                            @if(!$p->returnItem)
+                                                <select name="kondisi" required
+                                                    class="w-full border border-gray-300 rounded-lg px-4 py-2.5 
+                                                                                    focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150">
+                                                    <option value="">Pilih</option>
+                                                    <option value="baik">Baik</option>
+                                                    <option value="rusak">Rusak</option>
+                                                    <option value="hilang">Hilang</option>
+                                                </select>
+                                            @else
+                                                <span class="text-sm font-medium text-green-600">
+                                                    {{ $p->returnItem->kondisi }}
+                                                </span>
+                                            @endif
+
+                                        </td>
+
+                                        <td class="px-8 py-5 text-center">
+
+                                            @if(!$p->returnItem)
+                                                <textarea type="text" name="catatan" required
+                                                    class="w-full border border-gray-300 rounded-lg px-4 py-2.5 
+                                                                                    focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150"></textarea>
+                                            @else
+                                                <span class="text-sm font-medium text-green-600">
+                                                    {{ $p->returnItem->catatan }}
+                                                </span>
+                                            @endif
+
+                                        </td>
+
+                                        {{-- ACTION --}}
+                                        <td class="px-8 py-5">
+                                            <div class="flex items-center justify-center gap-2">
+                                                {{-- Bagian Status atau Tombol Return --}}
+                                                @if($p->persetujuan === 'disetujui')
+                                                    <button type="submit"
+                                                        class="bg-blue-600 text-white font-semibold px-3 py-1 rounded-md hover:bg-blue-700 transition duration-150 shadow-sm text-sm">
+                                                        Return
+                                                    </button>
+                                                @elseif($p->persetujuan === 'pending')
+                                                    <span class="px-3 py-1 bg-gray-400 text-white rounded-md text-sm">
+                                                        menunggu
+                                                    </span>
+                                                @elseif($p->persetujuan === 'ditolak')
+                                                    <span class="px-3 py-1 bg-red-400 text-white rounded-md text-sm">
+                                                        Ditolak
+                                                    </span>
+                                                @elseif($p->status === 'dikembalikan')
+                                                    <span class="px-3 py-1 bg-green-500 text-white rounded-md text-sm">
+                                                        returned
+                                                    </span>
+                                                @endif
+
+                                                {{-- Bagian Tombol Detail --}}
+                                                <a href="{{ route('peminjam.dipinjam.show', $p->id) }}"
+                                                    class="px-3 py-1 bg-blue-400 hover:bg-blue-500 text-white rounded-md text-sm font-medium transition">
+                                                    Detail
+                                                </a>
+                                            </div>
+                                        </td>
+
+                                    </form>
+
+                                </tr>
+                            @endif
+
                         @empty
                             {{-- Tampilan saat data kosong --}}
                             <tr>
