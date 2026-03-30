@@ -19,6 +19,11 @@ class Borrowing extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function tool()
+    {
+        return $this->belongsTo(Tool::class);
+    }
+
     public function loanDetail()
     {
         return $this->hasOne(LoanDetail::class);

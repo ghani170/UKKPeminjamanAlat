@@ -28,6 +28,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->grou
     Route::resource('/petugas', PetugasController::class);
     Route::resource('/kategori', KategoriController::class);
     Route::resource('/alat', AlatController::class);
+    Route::resource('/pengembalian', \App\Http\Controllers\Admin\PengembalianController::class);
+    Route::resource('/peminjaman', \App\Http\Controllers\Admin\PeminjamanController::class);
    
 });
 

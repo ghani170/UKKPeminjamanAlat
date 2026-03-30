@@ -30,7 +30,7 @@
                         <span>Dashboard</span>
                     </a>
 
-                    <a href="{{ route('admin.peminjam.index') }}" class="flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-slate-800 hover:text-blue-400 transition-all group {{ request()->routeIs('admin.peminjam*') ? 'bg-slate-800 text-blue-400' : '' }}">
+                    <a href="{{ route('admin.peminjam.index') }}" class="flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-slate-800 hover:text-blue-400 transition-all group {{ request()->routeIs('admin.peminjam.index', 'admin.peminjam.create', 'admin.peminjam.edit') ? 'bg-slate-800 text-blue-400' : '' }}">
                         <i class="fas fa-wallet"></i>
                         <span>Kelola Peminjam</span>
                     </a>
@@ -48,6 +48,16 @@
                     <a href="{{ route('admin.alat.index') }}" class="flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-slate-800 hover:text-blue-400 transition-all group {{ request()->routeIs('admin.alat*') ? 'bg-slate-800 text-blue-400' : '' }}">
                         <i class="fas fa-wallet"></i>
                         <span>Kelola Alat</span>
+                    </a>
+
+                    <a href="{{ route('admin.peminjaman.index') }}" class="flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-slate-800 hover:text-blue-400 transition-all group {{ request()->routeIs('admin.peminjaman*') ? 'bg-slate-800 text-blue-400' : '' }}">
+                        <i class="fas fa-wallet"></i>
+                        <span>Daftar Peminjaman</span>
+                    </a>
+
+                    <a href="{{ route('admin.pengembalian.index') }}" class="flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-slate-800 hover:text-blue-400 transition-all group {{ request()->routeIs('admin.pengembalian*') ? 'bg-slate-800 text-blue-400' : '' }}">
+                        <i class="fas fa-wallet"></i>
+                        <span>Daftar Pengembalian</span>
                     </a>
                     @endif
 
